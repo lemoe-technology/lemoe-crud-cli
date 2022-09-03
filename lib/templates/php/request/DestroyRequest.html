@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Http\Requests\<%= Model %>;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class DestroyRequest extends FormRequest
+{
+    public function authorize()
+    {
+        return auth()->user()->roles->pluck('name')->intersect(['admin'])->isNotEmpty();
+    }
+
+    public function rules()
+    {
+        return [];
+    }
+}

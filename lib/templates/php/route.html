@@ -1,0 +1,3 @@
+        Route::get('<%= models %>/query', [App\Http\Controllers\<%= Model %>Controller::class, 'query']);
+        Route::post('<%= models %>/bulk-destroy', [App\Http\Controllers\<%= Model %>Controller::class, 'bulkDestroy']);
+        Route::apiResource('<%= models %>', App\Http\Controllers\<%= Model %>Controller::class);

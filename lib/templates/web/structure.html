@@ -1,0 +1,30 @@
+<%_ meta.importApis.forEach((api) => { _%>
+<%- api %>
+<%_ }); _%>
+<%_ if (meta.hasEnum) { _%>
+import store from '@/store';
+<%_ } _%>
+
+export default {
+  title: '<%= title %>',
+  api: <%= model %>Api,
+  table: [
+    {
+      name: 'id',
+      title: 'id',
+      type: 'number',
+      searchable: false,
+      viewVisible: false,
+    },
+    <%_ meta.structures.forEach((structure) => { _%>
+    <%- structure %>
+    <%_ }); _%>
+    {
+      name: 'created_at',
+      title: '创建时间',
+      type: 'date',
+      searchable: false,
+      viewVisible: false,
+    },
+  ],
+};

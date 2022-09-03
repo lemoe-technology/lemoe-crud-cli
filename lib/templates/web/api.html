@@ -1,0 +1,48 @@
+import axios from '@/utils/axios';
+
+const fetchAll = (data = {}, config = {}) => {
+  return axios.get('/<%= models %>', {
+    params: data,
+    ...config,
+  });
+};
+
+const show = (id, data = {}, config = {}) => {
+  return axios.get(`/<%= models %>/${id}`, {
+    params: data,
+    ...config,
+  });
+};
+
+const query = (data = {}, config = {}) => {
+  return axios.get('/<%= models %>/query', {
+    params: data,
+    ...config,
+  });
+};
+
+const store = (data, config = {}) => {
+  return axios.post('/<%= models %>', data, config);
+};
+
+const update = (id, data, config = {}) => {
+  return axios.put(`/<%= models %>/${id}`, data, config);
+};
+
+const destroy = (id, data = {}, config = {}) => {
+  return axios.delete(`/<%= models %>/${id}`, data, config);
+};
+
+const bulkDestroy = (data, config = {}) => {
+  return axios.post('/<%= models %>/bulk-destroy', data, config);
+};
+
+export default {
+  fetchAll,
+  show,
+  query,
+  store,
+  update,
+  destroy,
+  bulkDestroy,
+};

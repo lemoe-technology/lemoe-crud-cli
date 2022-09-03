@@ -1,0 +1,8 @@
+    {
+      path: '<%= models %>',
+      component: () => import('@/views/<%= model %>/index.vue'),
+      meta: {
+        title: '<%= title %>',
+        roles: ['admin'],
+      },
+    },

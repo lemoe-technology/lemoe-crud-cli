@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Models;
+
+class <%= Model %> extends BaseModel
+{
+    <%_ meta.constants.forEach((constant) => { _%>
+    <%- constant %>
+    <%_ }); _%>
+    <%_ if (meta.casts.length > 0) { _%>
+    protected $casts = [
+        <%_ meta.casts.forEach((cast) => { _%>
+        <%- cast %>
+        <%_ }); _%>
+    ];
+
+    <%_ } _%>
+    <%_ meta.relationships.forEach((relationship) => { _%>
+    <%- relationship %>
+    <%_ }); _%>
+}

@@ -1,0 +1,80 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Resources\<%= Model %>Resource;
+use App\Http\Requests\<%= Model %>\BulkDestroyRequest;
+use App\Http\Requests\<%= Model %>\DestroyRequest;
+use App\Http\Requests\<%= Model %>\IndexRequest;
+use App\Http\Requests\<%= Model %>\QueryRequest;
+use App\Http\Requests\<%= Model %>\ShowRequest;
+use App\Http\Requests\<%= Model %>\StoreRequest;
+use App\Http\Requests\<%= Model %>\UpdateRequest;
+use App\Http\Resources\BaseResource;
+use App\Models\<%= Model %>;
+use App\Services\<%= Model %>Service;
+
+class <%= Model %>Controller extends BaseController
+{
+    public function __construct(
+        protected <%= Model %>Service $<%= model %>Service
+    ) {
+    }
+
+    public function index(IndexRequest $request)
+    {
+        $data = $request->query();
+
+        $<%= models %> = $this-><%= model %>Service->search($data);
+
+        return <%= Model %>Resource::collection($<%= models %>);
+    }
+
+    public function query(QueryRequest $request)
+    {
+        $data = $request->query();
+
+        $<%= models %> = $this-><%= model %>Service->query($data);
+
+        return new BaseResource($<%= models %>);
+    }
+
+    public function show(ShowRequest $request, <%= Model %> $<%= model %>)
+    {
+        return (new <%= Model %>Resource($<%= model %>))->response()->setStatusCode(200);
+    }
+
+    public function store(StoreRequest $request)
+    {
+        $data = $request->validated();
+
+        $<%= model %> = $this-><%= model %>Service->store($data);
+
+        return (new <%= Model %>Resource($<%= model %>))->response()->setStatusCode(201);
+    }
+
+    public function update(UpdateRequest $request, <%= Model %> $<%= model %>)
+    {
+        $data = $request->validated();
+
+        $<%= model %> = $this-><%= model %>Service->update($<%= model %>, $data);
+
+        return (new <%= Model %>Resource($<%= model %>))->response()->setStatusCode(201);
+    }
+
+    public function destroy(DestroyRequest $request, <%= Model %> $<%= model %>)
+    {
+        $this-><%= model %>Service->destroy($<%= model %>);
+
+        return (new BaseResource([]))->response()->setStatusCode(204);
+    }
+
+    public function bulkDestroy(BulkDestroyRequest $request)
+    {
+        $data = $request->validated();
+
+        $this-><%= model %>Service->bulkDestroy($data['ids']);
+
+        return (new BaseResource([]))->response()->setStatusCode(204);
+    }
+}

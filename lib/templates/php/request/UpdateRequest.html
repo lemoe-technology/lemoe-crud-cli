@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Http\Requests\<%= Model %>;
+
+<%_ meta.useModels.forEach((model) => { _%>
+<%- model %>
+<%_ }); _%>
+use Illuminate\Foundation\Http\FormRequest;
+<%_ if (meta.hasEnum) { _%>
+use Illuminate\Validation\Rule;
+<%_ } _%>
+
+class UpdateRequest extends FormRequest
+{
+    public function authorize()
+    {
+        return auth()->user()->roles->pluck('name')->intersect(['admin'])->isNotEmpty();
+    }
+
+    public function rules()
+    {
+        return [
+            <%_ meta.rules.forEach((rule) => { _%>
+            <%- rule %>
+            <%_ }); _%>
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            <%_ meta.attributes.forEach((attribute) => { _%>
+            <%- attribute %>
+            <%_ }); _%>
+        ];
+    }
+}

@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\<%= Model %>;
+
+class <%= Model %>Service extends BaseService
+{
+    protected $structure = [
+        <%_ meta.structures.forEach((structure) => { _%>
+        <%- structure %>
+        <%_ }); _%>
+    ];
+
+    public function search($data)
+    {
+        $query = <%= Model %>::query();
+        $this->buildQuery($query, $data);
+        $this->buildOrder($query, $data);
+
+        return $query->paginate($this->perPage($data));
+    }
+
+    public function query($data)
+    {
+        $query = <%= Model %>::query();
+        $query->select(['id', 'name']); // TODO: update model keyword
+        $this->buildQuery($query, $data);
+        $this->buildOrder($query, $data, 'id', 'asc');
+
+        return $query->get();
+    }
+
+    public function store($data)
+    {
+        return <%= Model %>::create($data);
+    }
+
+    public function update($<%= model %>, $data)
+    {
+        $<%= model %>->update($data);
+
+        return $<%= model %>;
+    }
+
+    public function destroy($<%= model %>)
+    {
+        $<%= model %>->delete();
+    }
+
+    public function bulkDestroy($ids)
+    {
+        <%= Model %>::whereIn('id', $ids)->delete();
+    }
+}
